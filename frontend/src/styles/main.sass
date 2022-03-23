@@ -1,0 +1,42 @@
+@import './vars.sass'
+
+@for $i from 2 through 6
+  .primary-grid-#{$i}
+    display: grid
+    grid-template-columns: repeat($i, 1fr)
+    grid-column-gap: 2*$step
+    grid-row-gap: 2*$step
+
+@for $i from 1 through 5
+  .m-#{$i}
+    margin: $i*$step
+  .mh-#{$i}
+    margin-left: $i*$step
+    margin-right: $i*$step
+  .mv-#{$i}
+    margin-top: $i*$step
+    margin-bottom: $i*$step
+  .mb-#{$i}
+    margin-bottom: $i*$step
+  .mt-#{$i}
+    margin-top: $i*$step
+  .ml-#{$i}
+    margin-left: $i*$step
+  .mr-#{$i}
+    margin-right: $i*$step
+  .p-#{$i}
+    padding: $i*$step
+  .ph-#{$i}
+    padding-left: $i*$step
+    padding-right: $i*$step
+  .pv-#{$i}
+    padding-top: $i*$step
+    padding-bottom: $i*$step
+  .pb-#{$i}
+    padding-bottom: $i*$step
+  .pt-#{$i}
+    padding-top: $i*$step
+  .pl-#{$i}
+    padding-left: $i*$step
+  .pr-#{$i}
+    padding-right: $i*$step
