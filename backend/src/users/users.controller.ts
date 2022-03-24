@@ -1,6 +1,6 @@
-import { Body, Controller, Post } from '@nestjs/common'
-import { ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { CreateUserDto, LoginUserDto } from './users.dto'
+import { Body, Controller, Get, HttpException, Post, Req } from '@nestjs/common'
+import { ApiHeader, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { CreateUserDto, GetUserDto, LoginUserDto } from './users.dto'
 import { UsersService } from './users.service'
 
 class ResponseToken {
@@ -13,17 +13,26 @@ class ResponseToken {
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  @ApiOperation({ summary: 'Получение пользователя' })
+  @ApiHeader({ name: 'token', description: 'jwt token' })
+  @ApiResponse({ status: 200, type: GetUserDto })
+  @Get()
+  findUser(@Req() req): Promise<GetUserDto|HttpException> {
+    return this.usersService.findUser(req)
+  }
+
+
   @ApiOperation({ summary: 'Авторизация' })
   @ApiResponse({ status: 200, type: ResponseToken })
   @Post('/login')
-  findUser(@Body() body: LoginUserDto) {
+  login(@Body() body: LoginUserDto): Promise<ResponseToken|HttpException> {
     return this.usersService.login(body)
   }
 
   @ApiOperation({ summary: 'Регистрация' })
   @ApiResponse({ status: 200 , type: ResponseToken})
   @Post('/reg')
-  createUser(@Body() body: CreateUserDto) {
+  createUser(@Body() body: CreateUserDto): Promise<ResponseToken|HttpException> {
     return this.usersService.registration(body)
   }
 }

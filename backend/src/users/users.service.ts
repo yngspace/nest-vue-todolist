@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { CreateUserDto, LoginUserDto } from './users.dto'
+import { CreateUserDto, GetUserDto, LoginUserDto } from './users.dto'
 import { User } from './users.entity'
 import * as bcrypt from 'bcrypt'
+import { isUUIDValidate } from 'src/pipes/isUUID.pipe'
 
 @Injectable()
 export class UsersService {
@@ -11,6 +12,23 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
   ) {}
+
+  async findUser(req): Promise<GetUserDto|HttpException> {
+    const { token } = req.headers
+    
+    isUUIDValidate(token)
+
+    const response = await this.usersRepository.findOne({ where: { id: token } })
+    if (!response) {
+      throw new HttpException({
+        status: HttpStatus.FORBIDDEN,
+        message: 'FORBIDDEN',
+      }, HttpStatus.FORBIDDEN)
+    }
+
+    const user = new GetUserDto(response)
+    return user
+  }
 
   async login(body: LoginUserDto) {
     const { login, password } = body
