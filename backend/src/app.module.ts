@@ -1,9 +1,11 @@
-import { Module } from '@nestjs/common'
+import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { User } from './users/users.entity'
 import { UsersModule } from './users/users.module'
 
+@Global()
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -17,9 +19,14 @@ import { UsersModule } from './users/users.module'
       entities: [User],
       synchronize: true,
     }),
+    JwtModule.register({
+      secret: process.env.SECRET_KEY || 'SECRET',
+      signOptions: {
+        expiresIn: '24h'
+      }
+    }),
     UsersModule,
   ],
-  controllers: [],
-  providers: [],
+  exports: [JwtModule]
 })
 export class AppModule {}

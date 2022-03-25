@@ -4,56 +4,56 @@ import { Repository } from 'typeorm'
 import { CreateUserDto, GetUserDto, LoginUserDto } from './users.dto'
 import { User } from './users.entity'
 import * as bcrypt from 'bcrypt'
-import { isUUIDValidate } from 'src/pipes/isUUID.pipe'
+import { JwtService } from '@nestjs/jwt'
+import { thorwUnauthError } from 'src/const'
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private jwtService: JwtService,
   ) {}
 
   async findUser(req): Promise<GetUserDto|HttpException> {
-    const { token } = req.headers
-    
-    isUUIDValidate(token)
+    const { id } = req.user
 
-    const response = await this.usersRepository.findOne({ where: { id: token } })
-    if (!response) {
-      throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        message: 'FORBIDDEN',
-      }, HttpStatus.FORBIDDEN)
-    }
+    const response = await this.usersRepository.findOne({ where: { id } })
+    if (!response) thorwUnauthError()
 
     const user = new GetUserDto(response)
     return user
+  }
+
+  async findByEmail(email: string) {
+    return await this.usersRepository.findOne({ where: { email } })
+  }
+
+  async findByLogin(login: string) {
+    return await this.usersRepository.findOne({ where: { login } })
+  }
+
+  async create(body: CreateUserDto) {
+    return await this.usersRepository.save(body)
   }
 
   async login(body: LoginUserDto) {
     const { login, password } = body
     const user = await this.usersRepository.findOne({ where: { login } })
 
-    if (!user) {
-      throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        message: 'Пользователь не найден',
-      }, HttpStatus.FORBIDDEN)
-    }
+    if (!user) thorwUnauthError()
 
     const isMatch = await bcrypt.compare(password, user.password)
 
     if (!isMatch) {
       throw new HttpException({
-        status: HttpStatus.FORBIDDEN,
-        message: 'FORBIDDEN',
+        status: HttpStatus.BAD_REQUEST,
+        message: 'BAD_REQUEST',
         errors: { password: 'Не верный пароль' }
-      }, HttpStatus.FORBIDDEN)
+      }, HttpStatus.BAD_REQUEST)
     }
 
-    return {
-      token: user.id
-    }
+    return this.generateToken(user)
   }
 
   async registration(body: CreateUserDto) {
@@ -76,8 +76,14 @@ export class UsersService {
     body.password = hashPassword
     body.name = name.slice(0, 1).toUpperCase() + name.slice(1, name.length).toLowerCase()
     const newUser = await this.usersRepository.save(body)
+
+    return this.generateToken(newUser)
+  }
+
+  async generateToken(user: User) {
+    const payload = { id: user.id, login: user.login, email: user.email }
     return {
-      token: newUser.id
+      token: this.jwtService.sign(payload)
     }
   }
 }

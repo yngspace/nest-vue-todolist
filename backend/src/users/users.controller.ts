@@ -1,5 +1,6 @@
-import { Body, Controller, Get, HttpException, Post, Req } from '@nestjs/common'
+import { Body, Controller, Get, HttpException, Post, Req, UseGuards } from '@nestjs/common'
 import { ApiHeader, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger'
+import { AuthGuard } from 'src/users/auth.guard'
 import { CreateUserDto, GetUserDto, LoginUserDto } from './users.dto'
 import { UsersService } from './users.service'
 
@@ -16,6 +17,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Получение пользователя' })
   @ApiHeader({ name: 'token', description: 'jwt token' })
   @ApiResponse({ status: 200, type: GetUserDto })
+  @UseGuards(AuthGuard)
   @Get()
   findUser(@Req() req): Promise<GetUserDto|HttpException> {
     return this.usersService.findUser(req)
