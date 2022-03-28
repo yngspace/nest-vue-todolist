@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Todo } from 'src/todoes/todoes.entity'
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity('users')
 export class User {
@@ -37,4 +38,7 @@ export class User {
   })
   @Column({ unique: true })
   email: string
+
+  // @OneToMany(() => Todo, (todo) => todo.userId)
+  // todo: Todo[]
 }

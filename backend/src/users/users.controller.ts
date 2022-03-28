@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpException, Post, Req, UseGuards } from '@nestjs/common'
 import { ApiHeader, ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger'
-import { AuthGuard } from 'src/users/auth.guard'
+import { AuthGuard } from 'src/guards/auth.guard'
 import { CreateUserDto, GetUserDto, LoginUserDto } from './users.dto'
 import { UsersService } from './users.service'
 

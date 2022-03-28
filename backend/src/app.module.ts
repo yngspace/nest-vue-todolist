@@ -2,6 +2,8 @@ import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Todo } from './todoes/todoes.entity'
+import { TodoesModule } from './todoes/todoes.module'
 import { User } from './users/users.entity'
 import { UsersModule } from './users/users.module'
 
@@ -16,7 +18,7 @@ import { UsersModule } from './users/users.module'
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User],
+      entities: [User, Todo],
       synchronize: true,
     }),
     JwtModule.register({
@@ -26,6 +28,7 @@ import { UsersModule } from './users/users.module'
       }
     }),
     UsersModule,
+    TodoesModule
   ],
   exports: [JwtModule]
 })
