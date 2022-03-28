@@ -2,6 +2,8 @@ import { Global, Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { JwtModule } from '@nestjs/jwt'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Folders } from './folders/folders.entity'
+import { FoldersModule } from './folders/folders.module'
 import { Todo } from './todoes/todoes.entity'
 import { TodoesModule } from './todoes/todoes.module'
 import { User } from './users/users.entity'
@@ -18,7 +20,7 @@ import { UsersModule } from './users/users.module'
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
-      entities: [User, Todo],
+      entities: [User, Todo, Folders],
       synchronize: true,
     }),
     JwtModule.register({
@@ -28,7 +30,8 @@ import { UsersModule } from './users/users.module'
       }
     }),
     UsersModule,
-    TodoesModule
+    TodoesModule,
+    FoldersModule
   ],
   exports: [JwtModule]
 })

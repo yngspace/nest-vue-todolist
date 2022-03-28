@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { FoldersService } from 'src/folders/folders.service'
 import { Repository } from 'typeorm'
 import { Todo } from './todoes.entity'
 
@@ -7,15 +8,19 @@ import { Todo } from './todoes.entity'
 export class TodoesService {
   constructor(
     @InjectRepository(Todo)
-    private todoRepository: Repository<Todo>
+    private todoRepository: Repository<Todo>,
+    private folderService: FoldersService
   ) {}
 
   async findTodoes(req, query) {
     const { id } = req.user
-    let { page, perPage, status } = query
+    let { page, perPage, status, folder } = query
     if (!page) page = 1
     if (!perPage) perPage = 10
-    const queryparam = status ? { status, user: id } : { user: id }
+
+    const queryparam = { user: id } as {[code: string]: string}
+    if (status) queryparam.status = status
+    if (folder) queryparam.folder = folder
 
     const response = await this.todoRepository.findAndCount({
       take: perPage || 10,
@@ -39,6 +44,17 @@ export class TodoesService {
   }
 
   async update(body, id) {
+    const { folder } = body
+    if (folder) {
+      const result = await this.folderService.getFolders(null, folder)
+      if (!result) {
+        throw new HttpException({
+          status: HttpStatus.BAD_REQUEST,
+          message: 'Не найдено'
+        }, HttpStatus.BAD_REQUEST)
+      }
+    }
+
     const updatedTodo = await this.todoRepository.findOne({ where: { id } })
     if (!updatedTodo) {
       throw new HttpException({

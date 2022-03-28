@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
+import { Folders } from 'src/folders/folders.entity'
 import { User } from 'src/users/users.entity'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
 
@@ -52,4 +53,11 @@ export class Todo {
   })
   @ManyToOne(() => User, user => user.id, { onDelete: 'CASCADE' })
   user: string
+
+  @ApiProperty({
+    example: '123e4567-e89b-12d3-a456-426655440000',
+    description: 'Уникальный идентификатор папки'
+  })
+  @ManyToOne(() => Folders, folder => folder.id, { onDelete: 'CASCADE' })
+  folder: string
 }

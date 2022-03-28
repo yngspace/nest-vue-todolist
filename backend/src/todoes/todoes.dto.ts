@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEnum, IsIn, IsNotEmpty } from 'class-validator'
+import { IsEmpty, IsEnum, IsIn, IsNotEmpty, IsUUID } from 'class-validator'
 import { IS_EMPTY } from 'src/const'
 import { Todo } from './todoes.entity'
 
@@ -82,4 +82,10 @@ export class UpdateTodoDto {
   })
   @IsEnum(Status, { message: 'Недопустимое значение' })
   status: Status
+
+  @ApiProperty({
+    example: '123e4567-e89b-12d3-a456-426655440000',
+    description: 'Уникальный идентификатор папки'
+  })
+  folder: string
 }

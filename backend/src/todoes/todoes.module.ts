@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { User } from 'src/users/users.entity'
+import { Folders } from 'src/folders/folders.entity'
+import { FoldersService } from 'src/folders/folders.service'
 import { TodoesController } from './todoes.controller'
 import { Todo } from './todoes.entity'
 import { TodoesService } from './todoes.service'
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Todo])],
-  providers: [TodoesService],
+  imports: [TypeOrmModule.forFeature([Todo, Folders])],
+  providers: [TodoesService, FoldersService],
   controllers: [TodoesController],
   exports: [TodoesService]
 })
