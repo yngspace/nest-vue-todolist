@@ -1,0 +1,43 @@
+@import '@/styles/vars'
+
+.default-input
+  position: relative
+  display: flex
+  flex-direction: column
+  min-width: 300px
+  background: #fff
+  width: 100%
+
+  &:focus-within
+    border-color: $blue
+    .default-input-label
+      color: $blue
+    .default-input-input
+      border-color: $blue
+      box-shadow: 1px 1px 4px 1px $blue
+
+  &.with-error
+    .default-input-input
+      border-color: $error-color
+      box-shadow: 1px 1px 4px 1px $error-color
+
+  .default-input-top-row
+    display: flex
+    justify-content: space-between
+    column-gap: 20px
+    font-size: 12px
+    padding: 4px 0
+  .default-input-label
+    color: $gray
+  .default-input-error
+    color: $error-color
+  .default-input-input
+    border: none
+    background: #fff
+    border: 1px solid $gray
+    border-radius: $step/3
+    padding: 10px 12px
+  input, textarea
+    outline: none
+    &::placeholder
+      color: $gray

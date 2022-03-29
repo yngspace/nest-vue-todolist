@@ -1,4 +1,59 @@
-@import './vars.sass'
+@import './vars'
+@import './reset'
+@import url(https://fonts.googleapis.com/css?family=Montserrat:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic)
+
+html
+  font-family: Montserrat
+  font-size: 18px
+  color: $dark
+body
+  background: #fff
+
+.container
+  max-width: 1440px
+  padding: 0 20px
+  margin: 0 auto
+
+.screen
+  overflow: hidden
+  min-height: 100vh
+
+.default-button
+  display: inline-block
+  padding: 8px 28px
+  background: $gray
+  color: #fff
+  border: 1px solid $gray
+  border-radius: $step
+  font-size: 18px
+  transition: background $time
+  &:hover
+    border: 1px solid $gray
+    background: darken($gray, 10%)
+    cursor: pointer
+  &:disabled
+    background: lighten($gray, 10%)
+    cursor: default
+
+.dark-button
+  @extend .default-button
+  background: $dark
+  border-color: $blue
+  &:hover
+    border: 1px solid $blue
+    background: darken($dark, 10%)
+  &:disabled
+    background: lighten($dark, 10%)
+
+.blue-button
+  @extend .default-button
+  background: $blue
+  border-color: $dark
+  &:hover
+    border: 1px solid $dark
+    background: darken($blue, 10%)
+  &:disabled
+    background: lighten($blue, 10%)
 
 @for $i from 2 through 6
   .primary-grid-#{$i}

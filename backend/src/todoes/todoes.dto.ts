@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { IsEmpty, IsEnum, IsIn, IsNotEmpty, IsUUID } from 'class-validator'
+import { Type } from 'class-transformer'
+import { IsDate, IsDateString, IsEmpty, IsEnum, IsIn, IsNotEmpty, IsUUID } from 'class-validator'
 import { IS_EMPTY } from 'src/const'
 import { Todo } from './todoes.entity'
 
@@ -19,9 +20,11 @@ export class CreatedTodoesDto {
   description: string
 
   @ApiProperty({
-    example: '24.09.2022',
+    example: '2022-03-27 20:28:38.269',
     description: 'Дата, крайний срок выполнения todo'
   })
+  @IsDate()
+  @Type(() => Date)
   @IsNotEmpty({ message: IS_EMPTY })
   deadline: Date
 }
@@ -70,10 +73,12 @@ export class UpdateTodoDto {
   description: string
 
   @ApiProperty({
-    example: '24.09.2022',
+    example: '2022-03-27 20:28:38.269',
     description: 'Дата, крайний срок выполнения todo'
   })
   @IsNotEmpty({ message: IS_EMPTY })
+  @IsDate()
+  @Type(() => Date)
   deadline: Date
 
   @ApiProperty({

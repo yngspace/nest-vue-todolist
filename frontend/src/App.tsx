@@ -1,11 +1,23 @@
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { RouterView } from 'vue-router'
+import { Auth } from './pages/auth'
 import '@/styles/main.sass'
 
 export default defineComponent({
   setup () {
+    const auth = ref<string>('')
+
+    onMounted(() => {
+      if (localStorage.auth) auth.value = localStorage.auth
+    })
+
     return () => (
       <div id='app'>
-        Hello
+        {
+          auth.value
+            ? <RouterView/>
+            : <Auth onAuth={() => { auth.value = localStorage.auth }}/>
+        }
       </div>
     )
   }

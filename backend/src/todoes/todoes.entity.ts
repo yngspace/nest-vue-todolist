@@ -27,14 +27,14 @@ export class Todo {
   description: string
 
   @ApiProperty({
-    example: '24.09.2022',
+    example: '2022-03-27 20:28:38.269',
     description: 'Дата создания todo, назначается автоматически'
   })
   @Column({ nullable: false, default: new Date() })
   createdAtt: Date
 
   @ApiProperty({
-    example: '24.09.2022',
+    example: '2022-03-27 20:28:38.269',
     description: 'Дата, крайний срок выполнения todo'
   })
   @Column()
