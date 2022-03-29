@@ -1,0 +1,19 @@
+@import '@/styles/vars'
+
+.header
+  background: $dark
+  color: $blue
+  padding: 10px 0
+  .row
+    display: flex
+    align-items: center
+    gap: 50px
+  .nav
+    a
+      color: $blue
+      margin: 0 10px
+      transition: $time
+    .router-link-exact-active
+      color: lighten($blue, 30%)
+  .blue-button
+    margin-left: auto

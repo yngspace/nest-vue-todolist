@@ -10,7 +10,7 @@ const addSlash = true
 async function request (method: Method, url: string, config?: AxiosRequestConfig) {
   if (!config) config = {}
   if (!config.headers) config.headers = {}
-  if (localStorage.auth) config.headers.Authorization = 'JWT ' + localStorage.auth
+  if (localStorage.auth) config.headers.token = 'jwt ' + localStorage.auth
   url = addSlash ? addTrailingSlash(url) : removeTrailingSlash(url)
 
   let response = null
