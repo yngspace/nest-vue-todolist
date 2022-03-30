@@ -22,6 +22,9 @@ export default defineComponent({
 
     onMounted(() => {
       if (localStorage.auth) onAuth()
+      window.addEventListener('401 Unauthorized', () => {
+        localStorage.clear()
+      })
     })
 
     return () => (

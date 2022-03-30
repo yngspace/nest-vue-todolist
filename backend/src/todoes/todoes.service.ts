@@ -25,7 +25,8 @@ export class TodoesService {
     const response = await this.todoRepository.findAndCount({
       take: perPage || 10,
       skip: parseInt(page) === 1 ? 0 : parseInt(perPage) * parseInt(page),
-      where: queryparam
+      where: queryparam,
+      relations: ['folder']
     })
 
     const [results, count] = response
@@ -55,7 +56,7 @@ export class TodoesService {
       }
     }
 
-    const updatedTodo = await this.todoRepository.findOne({ where: { id } })
+    const updatedTodo = await this.todoRepository.findOne({ where: { id }})
     if (!updatedTodo) {
       throw new HttpException({
         status: HttpStatus.BAD_REQUEST,
@@ -63,7 +64,9 @@ export class TodoesService {
       }, HttpStatus.BAD_REQUEST)
     }
     body.id = updatedTodo.id
-    return this.todoRepository.save(body)
+    await this.todoRepository.save(body)
+
+    return await this.todoRepository.findOne({ where: { id }, relations: ['folder'] })
   }
 
   async delete(id) {

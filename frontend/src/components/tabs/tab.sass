@@ -1,0 +1,14 @@
+@import '@/styles/vars.sass'
+
+.tab-list
+  display: flex
+  gap: 12px
+  margin-bottom: 40px
+  .tab-item
+    background: $blue
+    padding: 8px 12px
+    border-radius: $step
+    color: #fff
+    transition: background $time
+    &.active
+      background: lighten($blue, 20%)

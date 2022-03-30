@@ -51,8 +51,15 @@ async function put (url: string, data?: any, config?: AxiosRequestConfig) {
   })
 }
 
+async function patch (url: string, data?: any, config?: AxiosRequestConfig) {
+  return request('PATCH', url, {
+    data,
+    ...config
+  })
+}
+
 async function remove (url: string, config?: AxiosRequestConfig) {
   return request('DELETE', url, config)
 }
 
-export default { get, post, put, delete: remove }
+export default { get, post, put, delete: remove, patch }

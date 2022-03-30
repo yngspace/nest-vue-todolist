@@ -17,11 +17,11 @@ export class AuthForm {
 
   errors: Ref<{[code: string]: string}> = ref({})
 
-  getError (value: string) {
+  getError (value: string): string {
     return this.errors.value[value]
   }
 
-  reset () {
+  reset (): void {
     this.fields = ref({
       login: '',
       password: '',

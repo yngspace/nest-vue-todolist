@@ -16,7 +16,7 @@
   &.open
     transform: translateY(-50px)
     .arrow
-      transform: rotate(90deg)
+      transform: rotate(0)
   .folders-list
     display: flex
     gap: 20px
@@ -25,10 +25,17 @@
     overflow-x: auto
   .folders-item
     padding: 8px 12px
-    background: $gray
+    background: $blue
     border-radius: $step
+    transition: background $time
+    color: #fff
+    &.active
+      background: lighten($blue, 20%)
   .arrow
     transition: transform $time
-    transform: rotate(-90deg)
+    transform: rotate(180deg)
     cursor: pointer
     margin-top: 8px
+    img
+      height: 20px
+      width: 20px

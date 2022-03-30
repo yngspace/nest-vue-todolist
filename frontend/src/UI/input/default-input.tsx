@@ -11,7 +11,15 @@ interface DefaultInputProps {
   onValueChange: (v: string) => void
 }
 
-export const DefaultInput = ({ label, placeholder, modelValue, type, error, className, onValueChange }: DefaultInputProps) => {
+export const DefaultInput = ({
+  label,
+  placeholder,
+  modelValue,
+  type,
+  error,
+  className,
+  onValueChange
+}: DefaultInputProps): JSX.Element => {
   const cls = computed((): string => {
     const classes: string[] = ['default-input']
     if (className) classes.push(className)

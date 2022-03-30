@@ -1,6 +1,6 @@
 import './footer.sass'
 
-export const Footer = () => {
+export const Footer = (): JSX.Element => {
   return (
     <footer class='footer'>
       <div class='container'>

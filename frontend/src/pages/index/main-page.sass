@@ -4,3 +4,34 @@
   &.screen
     padding-top: 50px
     position: relative
+  .todo-list
+  .todo-item
+    position: relative
+    display: flex
+    justify-content: space-between
+    background: $blue
+    color: #fff
+    padding: 16px
+    border-radius: $step
+    margin: 16px 0
+    cursor: pointer
+    &:hover
+      .todo-label
+        opacity: 1
+    &.danger
+      background: $error-color
+  .todo-label
+    position: absolute
+    right: 10px
+    top: 10px
+    background: #85bb85
+    color: $dark
+    font-size: 12px
+    padding: 8px 12px
+    border-radius: $step*2
+    opacity: 0
+    transition: opacity $time
+  .row
+    display: grid
+    grid-template-columns: 70% 30%
+    column-gap: 80px
