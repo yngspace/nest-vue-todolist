@@ -5,6 +5,7 @@ import { Header } from './components/template/header'
 import { Footer } from './components/template/footer'
 import { store } from './store'
 import '@/styles/main.sass'
+import { CreatePopup } from './components/popup-create'
 
 export default defineComponent({
   setup () {
@@ -35,6 +36,7 @@ export default defineComponent({
               <Header onLogout={onLogout}/>
               <RouterView/>
               <Footer/>
+              <CreatePopup/>
             </>
             : <Auth onAuth={onAuth}/>
         }

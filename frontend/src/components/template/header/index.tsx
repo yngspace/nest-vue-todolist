@@ -20,7 +20,12 @@ export const Header = ({ onLogout }: IHeaderProps) => {
             <img class='logo' src={require('@/assets/img/logo.svg')} alt="logo"/>
           </RouterLink>
           <nav class='nav'>
-            {routes.map(item => <RouterLink to={item.path}>{item.name}</RouterLink>)}
+            <a href='#' onClick={() => store.dispatchPopUp('todo')}>
+              Создать Todo
+            </a>
+            <a href='#' onClick={() => store.dispatchPopUp('folder')}>
+              Создать Папку
+            </a>
           </nav>
           <div class='user'>
             Привет, {store.user.name}

@@ -8,9 +8,9 @@ class Todoes {
   folder: IFolder|null = null
 }
 
-interface IFolder {
+type IFolder = {
   id: string
   name: string
 }
 
-export { Todoes }
+export { Todoes, IFolder }

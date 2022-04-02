@@ -58,6 +58,6 @@ export class Todo {
     example: '123e4567-e89b-12d3-a456-426655440000',
     description: 'Уникальный идентификатор папки'
   })
-  @ManyToOne(() => Folders, folder => folder.id, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Folders, folder => folder.id, { onDelete: 'SET NULL' })
   folder: string
 }

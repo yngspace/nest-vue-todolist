@@ -1,11 +1,7 @@
 import { reactive } from 'vue'
 import axios from '@/axios'
 import { host } from '@/const'
-
-interface IFolder {
-  id: string
-  name: string
-}
+import { IFolder } from '@/pages/index/types'
 
 export const store = reactive({
   user: {
@@ -15,6 +11,8 @@ export const store = reactive({
     email: ''
   },
   folders: [] as IFolder[],
+  showPopup: false,
+  popupType: 'todo' as 'todo' | 'folder',
   async getProfile () {
     const response = (await axios.get(host + '/users')).data
     this.user = response
@@ -22,5 +20,9 @@ export const store = reactive({
   async getFolders () {
     const response = (await axios.get(host + '/folders')).data
     this.folders = response
+  },
+  dispatchPopUp (value: 'todo' | 'folder') {
+    this.popupType = value
+    this.showPopup = !this.showPopup
   }
 })

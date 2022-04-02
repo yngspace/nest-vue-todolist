@@ -4,13 +4,28 @@
   &.screen
     padding-top: 50px
     position: relative
+  .delete-todo
+    position: absolute
+    left: 0
+    top: 40%
+    opacity: 0
+    transition: $time
+    img
+      width: 80px
+    &.active
+      opacity: 1
+
   .todo-list
+    display: grid
+    grid-template-columns: repeat(3, 1fr)
+    grid-gap: 20px
   .todo-item
     position: relative
     display: flex
     justify-content: space-between
-    background: $blue
-    color: #fff
+    border: 2px solid $blue
+    box-shadow: 1px 2px 4px $dark
+    font-weight: 600
     padding: 16px
     border-radius: $step
     margin: 16px 0
@@ -19,7 +34,11 @@
       .todo-label
         opacity: 1
     &.danger
-      background: $error-color
+      border-color: $error-color
+      .fire
+        position: absolute
+        right: 10px
+        top: 10px
   .todo-label
     position: absolute
     right: 10px

@@ -23,4 +23,8 @@ export class FoldersService {
     data.user = user.id
     return await this.folderRepository.save(data)
   }
+
+  async delete(id: string) {
+    await this.folderRepository.delete(id)
+  }
 }
