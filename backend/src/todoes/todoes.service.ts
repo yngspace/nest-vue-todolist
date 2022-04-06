@@ -24,14 +24,15 @@ export class TodoesService {
 
     const response = await this.todoRepository.findAndCount({
       take: perPage || 10,
-      skip: parseInt(page) === 1 ? 0 : parseInt(perPage) * parseInt(page),
+      skip: Number(page) === 1 ? 0 : Number(page - 1) * Number(perPage),
       where: queryparam,
       relations: ['folder']
     })
 
     const [results, count] = response
+    const next = count > (+page * +perPage)
     return {
-      next: count > parseInt(perPage) ? true : false,
+      next,
       prev: parseInt(page) !== 1 ? true : false,
       count,
       results

@@ -13,6 +13,7 @@ export const Tabs = defineComponent({
     const route = useRoute()
     const getQueryParam = (value?: string): {[x: string]: LocationQueryValue | LocationQueryValue[]} => {
       const query = { ...route.query }
+      delete query.page
       value ? query.status = value : delete query.status
       return query
     }

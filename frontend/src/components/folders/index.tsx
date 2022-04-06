@@ -24,6 +24,7 @@ export const Folders = defineComponent({
     const getQueryParam = (value?: string): {[x: string]: LocationQueryValue | LocationQueryValue[]} => {
       const query = { ...route.query }
       value ? query.folder = value : delete query.folder
+      delete query.page
       return query
     }
 

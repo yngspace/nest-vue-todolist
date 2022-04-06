@@ -7,6 +7,7 @@ import { useRoute } from 'vue-router'
 import { Todoes } from './types'
 import moment from 'moment'
 import { DetailTodo } from '@/components/detail-todo'
+import { PaginationParam, Paination } from '@/UI/pagination'
 import './main-page.sass'
 
 export const MainPage = defineComponent({
@@ -16,12 +17,16 @@ export const MainPage = defineComponent({
     const isFoldersOpen = ref<boolean>(false)
     const acitveTodo = ref<Todoes|null>(null)
     const dragItem = ref<Todoes|null>(null)
+    const paginationParam = ref(new PaginationParam())
     const toggleFolder = (): void => {
       isFoldersOpen.value = !isFoldersOpen.value
     }
 
     const loadTodoes = async (): Promise<void> => {
-      todoList.value = (await axios.get(host + '/todoes', { params: route.query })).data.results
+      const response = (await axios.get(host + '/todoes', { params: { ...route.query, perPage: 9 } })).data
+      const { results, count, prev, next } = response
+      todoList.value = results
+      paginationParam.value = new PaginationParam(count, next, prev, 9, Number(route.query.page))
     }
 
     const compareDate = (value: Date): number => {
@@ -133,6 +138,7 @@ export const MainPage = defineComponent({
                   : <p>Не найдено:(</p>
                 }
               </div>
+              <Paination params={paginationParam.value}/>
             </div>
             <div class='col'>
               <DetailTodo todo={acitveTodo.value} onChangeTodo={onChangeTodo}/>

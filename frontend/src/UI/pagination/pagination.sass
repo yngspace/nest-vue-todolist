@@ -1,0 +1,24 @@
+@import '@/styles/vars'
+
+.default-pagination
+  display: flex
+  column-gap: 12px
+  align-items: center
+  .default-pagination-arrow
+    padding: 8px
+    border-radius: 50%
+    border: 1px solid $blue
+    transition: background $time
+    &.active
+      background: $blue
+    img
+      height: 14px
+      transform: rotate(90deg)
+    &.next
+      transform: rotate(-180deg)
+  .default-pagination-page
+    padding: 8px
+    border-radius: $step
+    font-size: 14px
+    &.active
+      border: 1px solid $blue

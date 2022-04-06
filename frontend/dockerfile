@@ -1,0 +1,11 @@
+FROM node:16.11.0-buster
+
+WORKDIR /frontend
+COPY package*.json /frontend/
+RUN yarn
+
+COPY . /frontend/
+
+EXPOSE 8080
+
+CMD ["yarn", "serve"]

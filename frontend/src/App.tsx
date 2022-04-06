@@ -5,7 +5,7 @@ import { Header } from './components/template/header'
 import { Footer } from './components/template/footer'
 import { store } from './store'
 import '@/styles/main.sass'
-import { CreatePopup } from './components/popup-create'
+import { CreatePopup } from './components/popup-create/index'
 
 export default defineComponent({
   setup () {
