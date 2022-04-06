@@ -15,8 +15,9 @@ body
   margin: 0 auto
 
 .screen
-  overflow: hidden
-  min-height: 100vh
+  overflow: auto
+  min-height: calc(100vh - $header-height - $footer-height)
+  height: calc(100vh - $header-height - $footer-height)
 
 .default-button
   display: inline-block
