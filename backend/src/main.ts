@@ -20,14 +20,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe())
   app.enableCors()
   await app.listen(PORT, () => {
-    console.log({
-      type: 'postgres',
-      host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB
-    })
+    console.log(`app running on port ${PORT}`)
   })
 }
 bootstrap()

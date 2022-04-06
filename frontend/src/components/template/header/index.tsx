@@ -6,12 +6,7 @@ interface IHeaderProps {
   onLogout: () => void
 }
 
-export const Header = ({ onLogout }: IHeaderProps) => {
-  const routes = [
-    { name: 'На главную', path: '/' },
-    { name: 'Добавить', path: '/create' }
-  ]
-
+export const Header = ({ onLogout }: IHeaderProps): JSX.Element => {
   return (
     <header class='header'>
       <div class='container'>
